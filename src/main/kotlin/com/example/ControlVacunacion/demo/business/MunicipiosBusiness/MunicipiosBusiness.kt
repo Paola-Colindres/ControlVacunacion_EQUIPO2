@@ -1,9 +1,12 @@
 package com.example.ControlVacunacion.demo.business.MunicipiosBusiness
 
 import com.example.ControlVacunacion.demo.dao.Municipios.MunicipiosRepository
+import com.example.ControlVacunacion.demo.dao.RegionesSanitarias.RegionesSanitariasRepository
 import com.example.ControlVacunacion.demo.exceptions.BusinessException
 import com.example.ControlVacunacion.demo.exceptions.NotFoundException
+import com.example.ControlVacunacion.demo.model.Fabricantes.fabricantes
 import com.example.ControlVacunacion.demo.model.Municipios.Municipios
+import com.example.ControlVacunacion.demo.model.RegionesSanitarias.RegionesSanitarias
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -135,5 +138,21 @@ class MunicipiosBusiness:IMunicipiosBusiness {
         if (municipio.id_region < 0) {
             throw BusinessException("Id de Region invalido")
         }
+        if (!validarRegion(municipio.id_region)) {
+            throw BusinessException("Id de Region No existe")
+        }
+    }
+    @Autowired
+    val regionRepository: RegionesSanitariasRepository? = null
+    fun validarRegion(idRegion : Long):Boolean{
+        var condicion :Boolean = false
+        var regiones : List<RegionesSanitarias>? = regionRepository!!.findAll()
+        for (region in regiones!!){
+            if (idRegion== region.id_region){
+                condicion = true
+                break
+            }
+        }
+        return condicion
     }
 }
