@@ -1,10 +1,13 @@
 package com.example.ControlVacunacion.demo.business.EstablecimientosDeSaludBusiness
 
 import com.example.ControlVacunacion.demo.dao.EstablecimientosDeSalud.EstablecimientosRepository
+import com.example.ControlVacunacion.demo.dao.Municipios.MunicipiosRepository
 import com.example.ControlVacunacion.demo.exceptions.BusinessException
 import com.example.ControlVacunacion.demo.exceptions.NotFoundException
 import com.example.ControlVacunacion.demo.model.EstablecimientosDeSalud.Establecimientos
-import com.sun.org.apache.bcel.internal.generic.IFEQ
+import com.example.ControlVacunacion.demo.model.Fabricantes.fabricantes
+import com.example.ControlVacunacion.demo.model.Municipios.Municipios
+//import com.sun.org.apache.bcel.internal.generic.IFEQ
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -158,5 +161,22 @@ class EstablecimientosBusiness:IEstablecimientosBusiness {
         if (establecimiento.id_municipio < 0) {
             throw BusinessException("Id de Municipio invalido")
         }
+        if (!validarMuni(establecimiento.id_municipio)) {
+            throw BusinessException("Id de Municipio no existe")
+        }
+    }
+
+    @Autowired
+    val municipioRepository: MunicipiosRepository? = null
+    fun validarMuni(idMuni:Long) : Boolean{
+        var condicion :Boolean = false
+        var municipios : List<Municipios>? = municipioRepository!!.findAll()
+        for (muni in municipios!!){
+            if (idMuni == muni.id_municipio){
+                condicion = true
+                break
+            }
+        }
+        return condicion
     }
 }

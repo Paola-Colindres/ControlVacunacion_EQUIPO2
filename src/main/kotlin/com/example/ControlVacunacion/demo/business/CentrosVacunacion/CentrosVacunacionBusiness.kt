@@ -1,9 +1,13 @@
 package com.example.ControlVacunacion.demo.business.CentrosVacunacion
 
 import com.example.ControlVacunacion.demo.dao.CentrosVacunacion.CentrosVacunacionRepository
+import com.example.ControlVacunacion.demo.dao.EstablecimientosDeSalud.EstablecimientosRepository
+import com.example.ControlVacunacion.demo.dao.Fabricantes.FabricantesRepository
 import com.example.ControlVacunacion.demo.exceptions.BusinessException
 import com.example.ControlVacunacion.demo.exceptions.NotFoundException
 import com.example.ControlVacunacion.demo.model.CentrosVacunacion.CentrosVacunacion
+import com.example.ControlVacunacion.demo.model.EstablecimientosDeSalud.Establecimientos
+import com.example.ControlVacunacion.demo.model.Fabricantes.fabricantes
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -116,19 +120,19 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
             throw BusinessException(e.message!!)
         }
         if (!opt.isPresent)
-            throw NotFoundException("No se encontro el Centro de Vacunacion: $nombreCentroVacunacion")
+            throw NotFoundException("No se encontró el Centro de Vacunación: $nombreCentroVacunacion")
         return opt.get()
     }
 
     private fun validarCentrosVacunacion(centroVacunacion: CentrosVacunacion) {
         if (centroVacunacion.nombre.isEmpty()) {
-            throw BusinessException("El nombre del Centro de Vacunacion no debe estar vacio")
+            throw BusinessException("El nombre del Centro de Vacunación no debe estar vaco")
         }
         if (centroVacunacion.nombre.length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en el nombre del Centro de Vacunacion")
         }
         if (centroVacunacion.nombre.length > 50) {
-            throw BusinessException("El nombre del Centro de Vacunacion es demasiado largo")
+            throw BusinessException("El nombre del Centro de Vacunación es demasiado largo")
         }
         if (centroVacunacion.direccion.isEmpty()) {
             throw BusinessException("La direccion no debe estar vacia")
@@ -169,6 +173,9 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
         if (centroVacunacion.id_establecimiento < 0) {
             throw BusinessException("ID de Establecimiento de Salud Invalido")
         }
+        if (!validarEstab(centroVacunacion.id_establecimiento)) {
+            throw BusinessException("ID de Establecimiento de Salud no existe")
+        }
     }
 
     private fun horario(horario: String):Boolean {
@@ -181,5 +188,19 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
             }
         }
         return validar
+    }
+
+    @Autowired
+    val establecimientoRepository: EstablecimientosRepository? = null
+    fun validarEstab(idEstab:Long) : Boolean{
+        var condicion :Boolean = false
+        var estableciminentos : List<Establecimientos>? = establecimientoRepository!!.findAll()
+        for (estab in estableciminentos!!){
+            if (idEstab == estab.id_establecimiento){
+                condicion = true
+                break
+            }
+        }
+        return condicion
     }
 }
