@@ -4,7 +4,6 @@ import com.example.ControlVacunacion.demo.dao.Civiles.CivilesRepository
 import com.example.ControlVacunacion.demo.exceptions.BusinessException
 import com.example.ControlVacunacion.demo.exceptions.NotFoundException
 import com.example.ControlVacunacion.demo.model.Civiles.Civiles
-import com.example.ControlVacunacion.demo.model.Vacunas.Vacunas
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
