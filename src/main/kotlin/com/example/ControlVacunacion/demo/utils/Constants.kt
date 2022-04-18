@@ -17,6 +17,12 @@ class Constants {
         const val URL_BASE_COMORBILIDADES= "$URL_BASE/comorbilidad"
         const val URL_BASE_CIVIL_COMORBILIDADES= "$URL_BASE/civil_comorbilidad"
         const val URL_BASE_UNIDADES_VACUNACION = "$URL_BASE/unidadVacunacion"
+        //
+        const val URL_BASE_CARGOS = "$URL_BASE/cargos"
+        const val URL_BASE_EMPLEADOS = "$URL_BASE/empleados"
+        const val URL_BASE_CARNET_ENCABEZADO = "$URL_BASE/carnetEncabezado"
+        const val URL_BASE_CARNET_DETALLE = "$URL_BASE/carnetDetalle"
+
 
     }
 }
