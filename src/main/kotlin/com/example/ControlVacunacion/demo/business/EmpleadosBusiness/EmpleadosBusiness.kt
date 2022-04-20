@@ -154,21 +154,24 @@ class EmpleadosBusiness:IEmpleadosBusiness {
             throw BusinessException("DNI demasiado corto")
         }
         //nombre
-        if(empleado.nombre.isEmpty()){
+        if(empleado.nombre.trim().isEmpty()){
             throw BusinessException("El nombre del empleado esta vacío")
         }
-        if(empleado.nombre.length < 3){
+        if(empleado.nombre.trim().length < 3){
             throw BusinessException("Ingrese mas de 3 caracteres en el nombre")
         }
-        if(empleado.nombre.length > 40){
+        if(empleado.nombre.trim().length > 40){
             throw BusinessException("El nombre es muy largo")
         }
         //telefono
-        if (empleado.telefono.toString().isEmpty()) {
+        if (empleado.telefono.toString().trim().isEmpty()) {
             throw BusinessException("El telefono no debe estar vacío")
         }
-        if (empleado.telefono.toString().length != 8) {
+        if (empleado.telefono.toString().trim().length != 8) {
             throw BusinessException("No. telefono Invalido")
+        }
+        if (empleado.telefono.toString()[0] != '2' && empleado.telefono.toString()[0] != '9' && empleado.telefono.toString()[0] != '8' && empleado.telefono.toString()[0] != '3') {
+            throw BusinessException("Operador de telefono Invalido!")
         }
         val patron = Pattern.compile("[2389]")
         val validarNumero = patron.matcher(java.lang.String.valueOf(empleado.telefono).substring(0, 1))
@@ -176,29 +179,29 @@ class EmpleadosBusiness:IEmpleadosBusiness {
             throw BusinessException("El número de teléfono debe iniciar con 2,3,8 o 9")
         }
         //correo
-        if(empleado.correo.isEmpty()){
+        if(empleado.correo.trim().isEmpty()){
             throw BusinessException("El correo del empleado esta vacío")
         }
-        if(empleado.correo.length < 3){
+        if(empleado.correo.trim().length < 3){
             throw BusinessException("Ingrese mas de 3 caracteres en el correo")
         }
-        if(empleado.correo.length > 50) {
+        if(empleado.correo.trim().length > 50) {
             throw BusinessException("El correo es muy largo")
         }
         if (!validarCorreo(empleado.correo)){
             throw BusinessException("La direccion de correo es invalida")
         }
         //password
-        if (empleado.password.isEmpty()) {
+        if (empleado.password.trim().isEmpty()) {
             throw BusinessException("La contraseña no debe estar vacia")
         }
-        if (empleado.password.length < 5) {
+        if (empleado.password.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en la contraseña")
         }
-        if (empleado.password.length > 15) {
+        if (empleado.password.trim().length > 15) {
             throw BusinessException("La contraseña es demasiado larga")
         }
-        if (empleado.id_cargo.toString().isEmpty()){
+        if (empleado.id_cargo.toString().trim().isEmpty()){
             throw BusinessException("Id del cargo no debe estar vacío")
         }
         if (empleado.id_cargo < 0){

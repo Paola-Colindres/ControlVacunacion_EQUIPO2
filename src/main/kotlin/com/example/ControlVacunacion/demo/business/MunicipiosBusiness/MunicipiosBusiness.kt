@@ -47,8 +47,11 @@ class MunicipiosBusiness:IMunicipiosBusiness {
         try {
             validarMunicipio(municipio)
             return municipioRepository!!.save(municipio)
-        } catch (e:Exception) {
+        } catch (e:BusinessException) {
             throw BusinessException(e.message!!)
+        }
+        catch (e:NotFoundException) {
+            throw NotFoundException(e.message!!)
         }
     }
 
@@ -101,8 +104,11 @@ class MunicipiosBusiness:IMunicipiosBusiness {
                         municipio.id_region)
                 municipioExistente.id_municipio = municipio.id_municipio
                 municipioRepository!!.save(municipioExistente)
-            } catch (e1:Exception) {
+            } catch (e1:BusinessException) {
                 throw BusinessException(e1.message!!)
+            }
+            catch (e2 :NotFoundException) {
+                throw NotFoundException(e2.message!!)
             }
         }
         return opt.get()
@@ -123,23 +129,23 @@ class MunicipiosBusiness:IMunicipiosBusiness {
     }
 
     fun validarMunicipio(municipio: Municipios) {
-        if (municipio.nombre.isEmpty()) {
+        if (municipio.nombre.trim().isEmpty()) {
             throw BusinessException("El nombre del municipio no debe estar vacio")
         }
-        if (municipio.nombre.length < 4) {
+        if (municipio.nombre.trim().length < 4) {
             throw BusinessException("Ingrese mas de cuatro caracteres en el nombre del municipio")
         }
-        if (municipio.nombre.length > 50) {
+        if (municipio.nombre.trim().length > 50) {
             throw BusinessException("El nombre del municipio es demasiado largo")
         }
-        if (municipio.id_region.toString().isEmpty()) {
+        if (municipio.id_region.toString().trim().isEmpty()) {
             throw BusinessException("El Id de Region viene vacio")
         }
         if (municipio.id_region < 0) {
             throw BusinessException("Id de Region invalido")
         }
         if (!validarRegion(municipio.id_region)) {
-            throw BusinessException("Id de Region No existe")
+            throw NotFoundException("Id de Region ${municipio.id_region} no encontrado")
         }
     }
     @Autowired

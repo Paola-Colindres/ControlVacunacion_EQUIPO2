@@ -6,6 +6,7 @@ import com.example.ControlVacunacion.demo.exceptions.NotFoundException
 import com.example.ControlVacunacion.demo.model.Civiles.Civiles
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.util.*
 import kotlin.jvm.Throws
 
@@ -126,7 +127,7 @@ class CivilesBusiness: ICivilesBusiness {
     }
     private fun validarCivil(civil: Civiles) {
         //dni
-        if (civil.dni.toString().isEmpty()){
+        if (civil.dni.toString().trim().isEmpty()){
             throw BusinessException("DNI no debe estar vacío")
         }
         if (civil.dni.toString().length != 13){
@@ -136,50 +137,56 @@ class CivilesBusiness: ICivilesBusiness {
             throw BusinessException("DNI Invalido!")
         }
         //nombre
-        if(civil.nombre.isEmpty()){
-            throw BusinessException("El nombre del civil esta vacío")
+        if(civil.nombre.trim().isEmpty()){
+            throw BusinessException("El nombre del paciente esta vacío")
         }
-        if(civil.nombre.length < 3){
+        if(civil.nombre.trim().length < 3){
             throw BusinessException("Ingrese mas de 3 caracteres en el nombre")
         }
-        if(civil.nombre.length > 40){
+        if(civil.nombre.trim().length > 40){
             throw BusinessException("El nombre es muy largo")
         }
        //fechaNacimiento
-        if (civil.fechaNacimiento.toString().isNullOrEmpty()){
+        if (civil.fechaNacimiento == null){
             throw BusinessException("La fecha de nacimiento esta vacía")
         }
+        if (civil.fechaNacimiento.isAfter(LocalDate.now())){
+            throw BusinessException("La fecha de nacimiento es invalida")
+        }
+        if (civil.fechaNacimiento.isAfter(LocalDate.now().minusYears(12))){
+            throw BusinessException("El paciente debe tener mas de 12 años")
+        }
         //direccion
-        if (civil.direccion.isEmpty()) {
+        if (civil.direccion.trim().isEmpty()) {
             throw BusinessException("La dirección no debe estar vacia")
         }
-        if (civil.direccion.length < 5) {
+        if (civil.direccion.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en la dirección")
         }
-        if (civil.direccion.length > 50) {
+        if (civil.direccion.trim().length > 50) {
             throw BusinessException("La dirección es demasiado larga")
         }
         //telefono
-        if (civil.telefono.isEmpty()) {
+        if (civil.telefono.trim().isEmpty()) {
             throw BusinessException("El telefono no debe estar vacío")
         }
-        if (civil.telefono.length != 8) {
+        if (civil.telefono.trim().length != 8) {
             throw BusinessException("No. telefono Invalido")
         }
-        if (civil.telefono[0] != '2' && civil.telefono[0] != '9' && civil.telefono[0] != '8' && civil.telefono[0] != '3') {
+        if (civil.telefono.trim()[0] != '2' && civil.telefono[0] != '9' && civil.telefono[0] != '8' && civil.telefono[0] != '3') {
            throw BusinessException("Operador de telefono Invalido!")
         }
         //sexo
-        if (civil.sexo.isEmpty()) {
+        if (civil.sexo.trim().isEmpty()) {
             throw BusinessException("El sexo del civil no debe estar vacío")
         }
-        if (civil.sexo.isEmpty()) {
+        if (civil.sexo.trim().isEmpty()) {
             throw BusinessException("El sexo del civil no debe estar vacío")
         }
-        if (civil.sexo.length < 8) {
+        if (civil.sexo.trim().length < 8) {
             throw BusinessException("Ingrese mas de 7 caracteres en el sexo del civil")
         }
-        if (civil.sexo.length > 9) {
+        if (civil.sexo.trim().length > 9) {
             throw BusinessException("Ingrese menos de 9 caracteres en el sexo del civil")
         }
 

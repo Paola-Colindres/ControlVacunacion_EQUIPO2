@@ -118,35 +118,35 @@ class PaisesBusiness:IPaisesBusiness {
     }
 
     private fun validarPais(pais: Paises) {
-        if (pais.codigo_iso.isEmpty()) {
-            throw BusinessException("El codigo ISO viene vacio")
+        if (pais.codigo_iso.trim().isEmpty()) {
+            throw BusinessException("El código ISO viene vacío")
         }
-        if (pais.codigo_iso.length < 3) {
-            throw BusinessException("El codigo ISO es muy corto")
+        if (pais.codigo_iso.trim().length < 3) {
+            throw BusinessException("El código ISO es muy corto")
         }
-        if (pais.codigo_iso.length > 3) {
-            throw BusinessException("El codigo ISO es demasiado largo")
+        if (pais.codigo_iso.trim().length > 3) {
+            throw BusinessException("El código ISO es demasiado largo")
         }
-        if (pais.nombre.isEmpty()) {
-            throw BusinessException("El nombre del pais viene vacio")
+        if (pais.nombre.trim().isEmpty()) {
+            throw BusinessException("El nombre del país viene vacío")
         }
-        if (pais.nombre.length < 4) {
-            throw BusinessException("El nombre del pais es muy corto")
+        if (pais.nombre.trim().length < 4) {
+            throw BusinessException("El nombre del país es muy corto")
         }
-        if (pais.nombre.length > 50) {
-            throw BusinessException("El nombre del pais es demasiado largo")
+        if (pais.nombre.trim().length > 50) {
+            throw BusinessException("El nombre del país es demasiado largo")
         }
-        if (pais.codigo_area.isEmpty()) {
-            throw BusinessException("El codigo de area no debe estar vacio")
+        if (pais.codigo_area.trim().isEmpty()) {
+            throw BusinessException("El código de área no debe estar vacio")
         }
-        if (!pais.codigo_area.contains("+")) {
-            throw BusinessException("Codigo de area invalido. Ejemplo: +504")
+        if (!pais.codigo_area.trim().contains("+")) {
+            throw BusinessException("Código de área invalido. Ejemplo: +504")
         }
-        if (pais.codigo_area.length < 3) {
-            throw BusinessException("El codigo de area es muy corto")
+        if (pais.codigo_area.trim().length < 2) {
+            throw BusinessException("El código de área es muy corto")
         }
-        if (pais.codigo_area.length > 4) {
-            throw BusinessException("El codigo de area es demasiado largo")
+        if (pais.codigo_area.trim().length > 4) {
+            throw BusinessException("El código de área es demasiado largo")
         }
 
     }

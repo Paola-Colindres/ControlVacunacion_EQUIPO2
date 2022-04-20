@@ -132,7 +132,7 @@ class CivilComorbilidadBusiness : ICivilComorbilidadBusiness{
 
     private fun validarCivilComorbilidad(civilComorb: Civil_Comorbilidad) {
         //id_civil
-        if (civilComorb.id_civil.toString().isEmpty()){
+        if (civilComorb.id_civil.toString().trim().isEmpty()){
             throw BusinessException("Id del civil no debe estar vacío")
         }
         if (civilComorb.id_civil < 0){
@@ -142,7 +142,7 @@ class CivilComorbilidadBusiness : ICivilComorbilidadBusiness{
             throw NotFoundException("Id del civil no existe")
         }
         //id_comorbilidad
-        if (civilComorb.id_comorbilidad.toString().isEmpty()){
+        if (civilComorb.id_comorbilidad.toString().trim().isEmpty()){
             throw BusinessException("Id de la comorbilidad no debe estar vacío")
         }
         if (civilComorb.id_comorbilidad < 0){
@@ -152,23 +152,23 @@ class CivilComorbilidadBusiness : ICivilComorbilidadBusiness{
             throw NotFoundException("Id de la comorbilidad no existe")
         }
         //estado
-        if (civilComorb.estado.isEmpty()){
+        if (civilComorb.estado.trim().isEmpty()){
             throw BusinessException("el estado no debe estar vacío")
         }
-        if (civilComorb.estado.length < 4){
+        if (civilComorb.estado.trim().length < 4){
             throw BusinessException("Ingrese mas de 3 caracteres en el estado")
         }
-        if (civilComorb.estado.length > 15){
+        if (civilComorb.estado.trim().length > 15){
             throw BusinessException("Ingrese menos de 15 caracteres en el estado")
         }
         //observacion
-        if (civilComorb.observacion.isEmpty()){
+        if (civilComorb.observacion.trim().isEmpty()){
             throw BusinessException("la observacion no debe estar vacío")
         }
-        if (civilComorb.observacion.length < 6){
+        if (civilComorb.observacion.trim().length < 6){
             throw BusinessException("Ingrese mas de 5 caracteres en la observacion")
         }
-        if (civilComorb.observacion.length > 25){
+        if (civilComorb.observacion.trim().length > 25){
             throw BusinessException("Ingrese menos de 25 caracteres en la observacion")
         }
     }

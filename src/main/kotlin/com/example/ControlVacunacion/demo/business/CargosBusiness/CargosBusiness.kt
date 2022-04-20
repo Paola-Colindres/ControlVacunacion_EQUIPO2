@@ -118,13 +118,13 @@ class CargosBusiness: ICargosBusiness {
     private fun validarCargo(cargo: Cargos, metodo:Int=1) {
 
         //Nombre
-        if(cargo.nombre.isEmpty()){
+        if(cargo.nombre.trim().isEmpty()){
             throw BusinessException("El nombre del cargo esta vacío")
         }
-        if(cargo.nombre.length < 3){
+        if(cargo.nombre.trim().length < 3){
             throw BusinessException("Ingrese mas de 3 caracteres en el nombre")
         }
-        if(cargo.nombre.length > 30){
+        if(cargo.nombre.trim().length > 30){
             throw BusinessException("El nombre es muy largo")
         }
         if(metodo!=0){
@@ -136,13 +136,13 @@ class CargosBusiness: ICargosBusiness {
             }
         }
         //Descripcion
-        if(cargo.descripcion.isEmpty()){
+        if(cargo.descripcion.trim().isEmpty()){
             throw BusinessException("La descripción esta vacía")
         }
-        if(cargo.descripcion.length < 5){
+        if(cargo.descripcion.trim().length < 5){
             throw BusinessException("Ingrese mas de 5 caracteres en la descripción")
         }
-        if(cargo.descripcion.length > 50){
+        if(cargo.descripcion.trim().length > 50){
             throw BusinessException("La descripción es muy larga")
         }
     }

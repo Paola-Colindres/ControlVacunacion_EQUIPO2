@@ -84,7 +84,7 @@ class CarnetDetalleBusiness:ICarnetDetalleBusiness {
     override fun updateCarnetDetalle(carnetDetalle: CarnetDetalle): CarnetDetalle {
         val opt:Optional<CarnetDetalle>
         try {
-            if (carnetDetalle.id_carnetDetalle.toString().isEmpty()){
+            if (carnetDetalle.id_carnetDetalle.toString().trim().isEmpty()){
                 throw BusinessException("Id del carnet detalle esta vacío")
             }
             if (carnetDetalle.id_carnetDetalle < 0){
@@ -135,7 +135,7 @@ class CarnetDetalleBusiness:ICarnetDetalleBusiness {
                 }
             }
         }
-        if (carnetDetalle.id_carnetEncabezado.toString().isEmpty()){
+        if (carnetDetalle.id_carnetEncabezado.toString().trim().isEmpty()){
             throw BusinessException("Id del encabezado no debe estar vacío")
         }
         if (carnetDetalle.id_carnetEncabezado < 0){
@@ -162,22 +162,22 @@ class CarnetDetalleBusiness:ICarnetDetalleBusiness {
         if(carnetDetalle.dosis == "Seleccióne una dosis"){
             throw BusinessException("Debe especificar la dosis")
         }
-        if (carnetDetalle.dosis.length < 5) {
+        if (carnetDetalle.dosis.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en la dosis")
         }
-        if (carnetDetalle.dosis.length > 50) {
+        if (carnetDetalle.dosis.trim().length > 50) {
             throw BusinessException("La dosis es demasiado larga")
         }
-        if (carnetDetalle.observacion.isEmpty()) {
+        if (carnetDetalle.observacion.trim().isEmpty()) {
             throw BusinessException("La observacion no debe estar vacia")
         }
-        if (carnetDetalle.observacion.length < 2) {
+        if (carnetDetalle.observacion.trim().length < 2) {
             throw BusinessException("Ingrese mas de dos caracteres en la observacion")
         }
-        if (carnetDetalle.observacion.length > 50) {
+        if (carnetDetalle.observacion.trim().length > 50) {
             throw BusinessException("La observacion es demasiado larga")
         }
-        if (carnetDetalle.idEmpleadoVacuno.toString().isEmpty()){
+        if (carnetDetalle.idEmpleadoVacuno.toString().trim().isEmpty()){
             throw BusinessException("Id del empleado no debe estar vacío")
         }
         if (carnetDetalle.idEmpleadoVacuno < 0){
@@ -219,7 +219,7 @@ class CarnetDetalleBusiness:ICarnetDetalleBusiness {
         var condicion = false
         val empelados : List<Empleados> = empleadoRepository!!.findAll()
         for (item in empelados){
-            if (idEmpleados == item.id_unidad){
+            if (idEmpleados == item.id_empleado){
                 condicion = true
                 break
             }

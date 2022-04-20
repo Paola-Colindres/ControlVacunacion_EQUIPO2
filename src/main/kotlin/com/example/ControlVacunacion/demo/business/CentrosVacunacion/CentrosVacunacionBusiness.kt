@@ -47,8 +47,11 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
         try {
             validarCentrosVacunacion(centroVacunacion)
             return centroRepository!!.save(centroVacunacion)
-        } catch (e:Exception) {
+        } catch (e:BusinessException) {
             throw BusinessException(e.message!!)
+        }
+        catch (e:NotFoundException) {
+            throw NotFoundException(e.message!!)
         }
     }
 
@@ -104,8 +107,11 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
                         centroVacunacion.id_establecimiento)
                 centroExistente.id_centroVacunacion = centroVacunacion.id_centroVacunacion
                 centroRepository!!.save(centroExistente)
-            } catch (e:Exception) {
+            } catch (e:BusinessException) {
                 throw BusinessException(e.message!!)
+            }
+            catch (e:NotFoundException) {
+                throw NotFoundException(e.message!!)
             }
         }
         return opt.get()
@@ -125,56 +131,56 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
     }
 
     private fun validarCentrosVacunacion(centroVacunacion: CentrosVacunacion) {
-        if (centroVacunacion.nombre.isEmpty()) {
+        if (centroVacunacion.nombre.trim().isEmpty()) {
             throw BusinessException("El nombre del Centro de Vacunación no debe estar vaco")
         }
-        if (centroVacunacion.nombre.length < 5) {
+        if (centroVacunacion.nombre.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en el nombre del Centro de Vacunacion")
         }
-        if (centroVacunacion.nombre.length > 50) {
+        if (centroVacunacion.nombre.trim().length > 50) {
             throw BusinessException("El nombre del Centro de Vacunación es demasiado largo")
         }
-        if (centroVacunacion.direccion.isEmpty()) {
+        if (centroVacunacion.direccion.trim().isEmpty()) {
             throw BusinessException("La direccion no debe estar vacia")
         }
-        if (centroVacunacion.direccion.length < 5) {
+        if (centroVacunacion.direccion.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en la direccion")
         }
-        if (centroVacunacion.direccion.length > 50) {
+        if (centroVacunacion.direccion.trim().length > 50) {
             throw BusinessException("La direccion es demasiado larga")
         }
-        if (centroVacunacion.tipo.isEmpty()) {
+        if (centroVacunacion.tipo.trim().isEmpty()) {
             throw BusinessException("El tipo de Centro de Vacunacion viene vacio")
         }
-        if (centroVacunacion.tipo.length < 7) {
+        if (centroVacunacion.tipo.trim().length < 7) {
             throw BusinessException("El tipo de Centro de Vacunacion es muy corto")
         }
-        if (centroVacunacion.tipo != "Privado" && centroVacunacion.tipo != "Publico") {
+        if (centroVacunacion.tipo.trim() != "Privado" && centroVacunacion.tipo != "Publico") {
             throw BusinessException("Tipo de Centro de Vacunacion Invalido. Indique si es Privado o Publico.")
         }
-        if (centroVacunacion.horario.isEmpty()) {
+        if (centroVacunacion.horario.trim().isEmpty()) {
             throw BusinessException("El horario viene vacio")
         }
-        if (!centroVacunacion.horario.contains("-")) {
+        if (!centroVacunacion.horario.trim().contains("-")) {
             throw BusinessException("Horario invalido. Ejemplo: Lunes-Viernes 8:00am-5:00pm")
         }
-        if (!centroVacunacion.horario.contains(":")) {
+        if (!centroVacunacion.horario.trim().contains(":")) {
             throw BusinessException("Horario invalido. Ejemplo: Lunes-Viernes 8:00am-5:00pm")
         }
-        if (!horario(centroVacunacion.horario)) {
+        if (!horario(centroVacunacion.horario.trim())) {
             throw BusinessException("Horario invalido. Ejemplo: Lunes-Viernes 8:00am-5:00pm")
         }
-        if (centroVacunacion.horario.length > 50) {
+        if (centroVacunacion.horario.trim().length > 50) {
             throw BusinessException("El horario es demasiado largo")
         }
-        if (centroVacunacion.id_establecimiento.toString().isEmpty()) {
+        if (centroVacunacion.id_establecimiento.toString().trim().isEmpty()) {
             throw BusinessException("El ID del Establecimiento de Salud no debe estar vacio")
         }
         if (centroVacunacion.id_establecimiento < 0) {
             throw BusinessException("ID de Establecimiento de Salud Invalido")
         }
         if (!validarEstab(centroVacunacion.id_establecimiento)) {
-            throw BusinessException("ID de Establecimiento de Salud no existe")
+            throw NotFoundException("ID de Establecimiento de Salud ${centroVacunacion.id_establecimiento} no encontrado")
         }
     }
 

@@ -130,7 +130,7 @@ class UnidadVacunacionBusiness: IUnidadVacunacionBusiness {
 
     private fun validarUnidad(unidad: UnidadVacunacion) {
         //centro
-        if (unidad.id_centro.toString().isEmpty()){
+        if (unidad.id_centro.toString().trim().isEmpty()){
             throw BusinessException("ID del centro de vacunación no debe estar vacío")
         }
         if (unidad.id_centro < 0){
@@ -140,24 +140,24 @@ class UnidadVacunacionBusiness: IUnidadVacunacionBusiness {
             throw NotFoundException("ID del Centro de Vacunación no existe")
         }
         //vacunaSuministrar
-        if (unidad.id_vacuna_suministrar.toString().isEmpty()){
+        if (unidad.id_vacuna_suministrar.toString().trim().isEmpty()){
             throw BusinessException("ID de la Vacuna a sumistrar no debe estar vacío")
         }
         if (unidad.id_vacuna_suministrar < 0){
             throw BusinessException("ID de la Vacuna a sumistrar Invalido!")
         }
         if (!validarVacuna(unidad.id_vacuna_suministrar)){
-            throw NotFoundException("ID de la Vacuna a sumistrar no existe")
+            throw NotFoundException("ID de la Vacuna a sumistrar ${unidad.id_vacuna_suministrar} no encontrado")
         }
         //tipo
-        if (unidad.tipo.isEmpty()){
+        if (unidad.tipo.trim().isEmpty()){
             throw BusinessException("tipo de unidad no debe estar vacío")
         }
-        if (unidad.tipo.length < 6){
+        if (unidad.tipo.trim().length < 6){
             throw BusinessException("Ingrese mas de 6 caracteres en el tipo de unidad")
         }
-        if (unidad.tipo.length > 20){
-            throw BusinessException("Ingrese menos de 20 caracteres en el tipo de unidad")
+        if (unidad.tipo.trim().length > 15){
+            throw BusinessException("Ingrese menos de 15 caracteres en el tipo de unidad")
         }
     }
 

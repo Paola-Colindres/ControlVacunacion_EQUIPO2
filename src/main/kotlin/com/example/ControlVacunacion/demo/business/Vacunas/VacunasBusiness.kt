@@ -172,6 +172,21 @@ class VacunasBusiness:IVacunasBusiness {
         if (vacuna.fechaLlegada == null){
             throw BusinessException("Fecha de Llegada esta vacía!")
         }
+        if (vacuna.fechaFabricacion!!.isAfter(LocalDate.now())){
+            throw BusinessException("Fecha de fabricación Invalida")
+        }
+        if (vacuna.fechaFabricacion!!.isAfter(vacuna.fechaVencimiento)){
+            throw BusinessException("Fecha de fabricación no puede ser mayor a la fecha de vencimiento")
+        }
+        if (vacuna.fechaVencimiento!!.isBefore(LocalDate.now())){
+            throw BusinessException("Fecha de Vencimiento Invalida")
+        }
+        if (vacuna.fechaLlegada!!.isAfter(LocalDate.now())){
+            throw BusinessException("Fecha de Llegada Invalida")
+        }
+        if (vacuna.fechaLlegada!!.isBefore(vacuna.fechaFabricacion)){
+            throw BusinessException("Fecha de Llegada no puede ser menor a la de fabricacion")
+        }
 
     /*
         if (vacuna.fechaFabricacion.toString().length != 10){
