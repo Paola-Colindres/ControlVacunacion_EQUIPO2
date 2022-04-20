@@ -47,8 +47,11 @@ class EstablecimientosBusiness:IEstablecimientosBusiness {
         try {
             validarEstablecimiento(establecimiento)
             return establecimientoRepository!!.save(establecimiento)
-        } catch (e:Exception) {
+        } catch (e:BusinessException) {
             throw BusinessException(e.message!!)
+        }
+        catch (e:NotFoundException) {
+            throw NotFoundException(e.message!!)
         }
     }
 
@@ -103,8 +106,11 @@ class EstablecimientosBusiness:IEstablecimientosBusiness {
                         establecimiento.id_municipio)
                 establecimientoExistente.id_establecimiento = establecimiento.id_establecimiento
                 establecimientoRepository!!.save(establecimientoExistente)
-            } catch (e:Exception) {
+            } catch (e:BusinessException) {
                 throw BusinessException(e.message!!)
+            }
+            catch (e:NotFoundException) {
+                throw NotFoundException(e.message!!)
             }
         }
         return opt.get()
@@ -125,44 +131,48 @@ class EstablecimientosBusiness:IEstablecimientosBusiness {
     }
 
     private fun validarEstablecimiento(establecimiento: Establecimientos) {
-        if (establecimiento.nombre.isEmpty()) {
+        if (establecimiento.nombre.trim().isEmpty()) {
             throw BusinessException("El nombre del Establecimiento de Salud no debe estar vacio")
         }
-        if (establecimiento.nombre.length < 5) {
+        if (establecimiento.nombre.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en el nombre del Establecimiento de Salud")
         }
-        if (establecimiento.nombre.length > 50) {
+        if (establecimiento.nombre.trim().length > 50) {
             throw BusinessException("El nombre del Establecimiento de Salud es demasiado largo")
         }
-        if (establecimiento.direccion.isEmpty()) {
+        if (establecimiento.direccion.trim().isEmpty()) {
             throw BusinessException("La direccion no debe estar vacia")
         }
-        if (establecimiento.direccion.length < 5) {
+        if (establecimiento.direccion.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en la direccion")
         }
-        if (establecimiento.direccion.length > 50) {
+        if (establecimiento.direccion.trim().length > 50) {
             throw BusinessException("La direccion es demasiado larga")
         }
-        if (establecimiento.telefono.toString().isEmpty()) {
+        if (establecimiento.telefono.toString().trim().isEmpty()) {
             throw BusinessException("El numero de telefono no debe estar vacio")
         }
         if (establecimiento.telefono < 0) {
             throw BusinessException("Numero de telefono invalido")
         }
-        if (establecimiento.telefono.toString().length < 8) {
+        if (establecimiento.telefono.toString().trim().length < 8) {
             throw BusinessException("El numero de telefono es muy corto")
         }
-        if (establecimiento.telefono.toString().length > 8) {
+        if (establecimiento.telefono.toString().trim().length > 8) {
             throw BusinessException("El numero de telefono es demasiado largo")
         }
-        if (establecimiento.id_municipio.toString().isEmpty()) {
+        if (establecimiento.telefono.toString().trim()[0] != '3' && establecimiento.telefono.toString().trim()[0] != '2'
+                && establecimiento.telefono.toString().trim()[0] != '8' && establecimiento.telefono.toString().trim()[0] != '9') {
+            throw BusinessException("Operadora de telefono Invalido!")
+        }
+        if (establecimiento.id_municipio.toString().trim().isEmpty()) {
             throw BusinessException("El Id del Municipio viene vacio")
         }
         if (establecimiento.id_municipio < 0) {
             throw BusinessException("Id de Municipio invalido")
         }
         if (!validarMuni(establecimiento.id_municipio)) {
-            throw BusinessException("Id de Municipio no existe")
+            throw NotFoundException("Id de Municipio ${establecimiento.id_municipio} no econtrado")
         }
     }
 

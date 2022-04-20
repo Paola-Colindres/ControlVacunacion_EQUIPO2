@@ -126,23 +126,23 @@ class FabricantesBusiness:IFabricantesBusiness {
 
     private fun validarfabricantes(fabricante: fabricantes) {
         //laboratorio
-        if (fabricante.laboratorio.isEmpty()){
+        if (fabricante.laboratorio.trim().isEmpty()){
             throw BusinessException("El nombre del laboratorío no debe estar vacío")
         }
-        if (fabricante.laboratorio.length < 6){
+        if (fabricante.laboratorio.trim().length < 6){
             throw BusinessException("Ingrese mas de seis caracteres en el nombre del laboratorío")
         }
-        if (fabricante.laboratorio.length > 30){
+        if (fabricante.laboratorio.trim().length > 30){
             throw BusinessException("Ingrese menos de 30 caracteres en el nombre del laboratorío")
         }
         //contacto
-        if (fabricante.nombre_contacto.isEmpty()){
+        if (fabricante.nombre_contacto.trim().isEmpty()){
             throw BusinessException("El nombre de contacto no debe estar vacío")
         }
-        if (fabricante.nombre_contacto.length < 3){
+        if (fabricante.nombre_contacto.trim().length < 3){
             throw BusinessException("Ingrese mas de tres caracteres en el nombre del contacto")
         }
-        if (fabricante.nombre_contacto.length > 50){
+        if (fabricante.nombre_contacto.trim().length > 50){
             throw BusinessException("Ingrese menos de 50 caracteres en el nombre del contacto")
         }
         //telefono_contacto
@@ -152,14 +152,14 @@ class FabricantesBusiness:IFabricantesBusiness {
         if (fabricante.telefono_contacto<= 0){
             throw BusinessException("número de telefono invalido!")
         }
-        if (fabricante.telefono_contacto.toString().length < 8){
+        if (fabricante.telefono_contacto.toString().trim().length < 8){
             throw BusinessException("Ingrese mas de 7 caracteres en Tel. de contacto")
         }
-        if (fabricante.telefono_contacto.toString().length > 15){
+        if (fabricante.telefono_contacto.toString().trim().length > 15){
             throw BusinessException("Ingrese menos de 15 caracteres en Tel. de contacto")
         }
         //id_pais
-        if (fabricante.id_pais.toString().isEmpty()){
+        if (fabricante.id_pais.toString().trim().isEmpty()){
             throw BusinessException("Id del País esta vacío")
         }
         if (fabricante.id_pais < 0){

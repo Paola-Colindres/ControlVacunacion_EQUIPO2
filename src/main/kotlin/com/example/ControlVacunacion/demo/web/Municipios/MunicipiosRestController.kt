@@ -78,13 +78,22 @@ class MunicipiosRestController {
             municipioBusiness!!.saveMunicipio(municipio)
             val responseHeader = HttpHeaders()
             responseHeader.set("location", Constants.URL_BASE_MUNICIPIOS + "/" + municipio.id_municipio)
-            ResponseEntity(municipio, responseHeader, HttpStatus.CREATED)} catch (e:BusinessException) {
+            ResponseEntity(municipio, responseHeader, HttpStatus.CREATED)
+        } catch (e:BusinessException) {
             val apiError = RestApiError(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     "Informacion enviada no es valida",
                     e.message.toString()
             )
             ResponseEntity(apiError, HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+        catch (e:NotFoundException) {
+            val apiError = RestApiError(
+                    HttpStatus.NOT_FOUND,
+                    "No se encontró coincidencias",
+                    e.message.toString()
+            )
+            ResponseEntity(apiError, HttpStatus.NOT_FOUND)
         }
     }
 

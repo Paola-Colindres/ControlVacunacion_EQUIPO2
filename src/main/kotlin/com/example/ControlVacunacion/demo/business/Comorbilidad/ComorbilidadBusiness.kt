@@ -124,23 +124,23 @@ class ComorbilidadBusiness: IComorbilidadBusiness {
 
     private fun validarComorbilidad(comorb: Comorbilidad) {
         //nombre
-        if (comorb.nombre.isEmpty()){
+        if (comorb.nombre.trim().isEmpty()){
             throw BusinessException("nombre de la comorbilidad no debe estar vacío")
         }
-        if (comorb.nombre.length < 3){
+        if (comorb.nombre.trim().length < 3){
             throw BusinessException("Ingrese mas de 3 caracteres en el nombre de la comorbilidad")
         }
-        if (comorb.nombre.length > 50){
+        if (comorb.nombre.trim().length > 50){
             throw BusinessException("Ingrese menos de 50 caracteres en el nombre de la comorbilidad")
         }
         //tipo
-        if (comorb.tipo.isEmpty()){
+        if (comorb.tipo.trim().isEmpty()){
             throw BusinessException("tipo de la comorbilidad no debe estar vacío")
         }
-        if (comorb.tipo.length < 6){
+        if (comorb.tipo.trim().length < 6){
             throw BusinessException("Ingrese mas de 6 caracteres en el tipo de la comorbilidad")
         }
-        if (comorb.tipo.length > 50){
+        if (comorb.tipo.trim().length > 50){
             throw BusinessException("Ingrese menos de 50 caracteres en el tipo de la comorbilidad")
         }
 

@@ -87,6 +87,14 @@ class EstablecimientosRestController {
             )
             ResponseEntity(apiError, HttpStatus.INTERNAL_SERVER_ERROR)
         }
+        catch (e: NotFoundException) {
+            val apiError = RestApiError(
+                    HttpStatus.NOT_FOUND,
+                    "No se encontró coincidencias",
+                    e.message.toString()
+            )
+            ResponseEntity(apiError, HttpStatus.NOT_FOUND)
+        }
     }
 
     @PostMapping("/addEstablecimientos")

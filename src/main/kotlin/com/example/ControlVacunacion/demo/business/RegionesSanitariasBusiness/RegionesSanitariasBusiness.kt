@@ -120,35 +120,39 @@ class RegionesSanitariasBusiness:IRegionesSanitariasBusiness {
     }
 
     private fun validarRegionSanitaria(region: RegionesSanitarias) {
-        if (region.departamento.isEmpty()) {
+        if (region.departamento.trim().isEmpty()) {
             throw BusinessException("El nombre del departamento no debe estar vacio")
         }
-        if (region.departamento.length < 4) {
+        if (region.departamento.trim().length < 4) {
             throw BusinessException("El nombre del departamento es muy corto")
         }
-        if (region.departamento.length > 20) {
+        if (region.departamento.trim().length > 20) {
             throw BusinessException("El nombre del departamento es muy largo")
         }
-        if (region.jefatura.isEmpty()) {
+        if (region.jefatura.trim().isEmpty()) {
             throw BusinessException("El nombre de Jefatura Regional viene vacio")
         }
-        if (region.jefatura.length < 5) {
+        if (region.jefatura.trim().length < 5) {
             throw BusinessException("Ingrese mas de cinco caracteres en Jefatura Regional")
         }
-        if (region.jefatura.length > 30) {
+        if (region.jefatura.trim().length > 30) {
             throw BusinessException("El nombre de Jefatura Regional es muy largo")
         }
-        if (region.telefono.toString().isEmpty()) {
+        if (region.telefono.toString().trim().isEmpty()) {
             throw BusinessException("El numero de telefono no debe estar vacio")
         }
         if (region.telefono < 0) {
             throw BusinessException("Numero de telefono invalido")
         }
-        if (region.telefono.toString().length < 8) {
+        if (region.telefono.toString().trim().length < 8) {
             throw BusinessException("El numero de telefono es muy corto")
         }
-        if (region.telefono.toString().length > 8) {
+        if (region.telefono.toString().trim().length > 8) {
             throw BusinessException("El numero de telefono es demasiado largo")
+        }
+        if (region.telefono.toString()[0] != '2' && region.telefono.toString()[0] != '9' && region.telefono.toString()[0] != '8'
+                && region.telefono.toString()[0] != '3') {
+            throw BusinessException("Operadora del telefono Invalido!")
         }
     }
 }
