@@ -98,7 +98,7 @@ class CarnetDetalleBusiness:ICarnetDetalleBusiness {
             throw NotFoundException("No se encontró el carnet detalle: ${carnetDetalle.id_carnetDetalle}")
         else {
             try {
-                validarCarnetDetalle(carnetDetalle,0)
+                validarCarnetDetalle(carnetDetalle)
                 val carnetDetalleExist = CarnetDetalle(
                         carnetDetalle.id_carnetEncabezado,
                         carnetDetalle.id_unidad,
@@ -126,15 +126,7 @@ class CarnetDetalleBusiness:ICarnetDetalleBusiness {
             throw NotFoundException("No se encontró el carnet detalle con observacion: $observacion")
         return opt.get()
     }
-    fun validarCarnetDetalle(carnetDetalle: CarnetDetalle,metodo:Int=1){
-        if(metodo!=0){
-            val detalles:List<CarnetDetalle> = carDeBusiness!!.findAll()
-            for(item in detalles){
-                if(carnetDetalle.id_carnetDetalle == item.id_carnetDetalle){
-                    throw BusinessException("Id del detalle ya esta en uso")
-                }
-            }
-        }
+    fun validarCarnetDetalle(carnetDetalle: CarnetDetalle){
         if (carnetDetalle.id_carnetEncabezado.toString().trim().isEmpty()){
             throw BusinessException("Id del encabezado no debe estar vacío")
         }
