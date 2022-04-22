@@ -155,7 +155,7 @@ class CentrosVacunacionBusiness:ICentrosVacunacionBusiness {
         if (centroVacunacion.tipo.trim().length < 7) {
             throw BusinessException("El tipo de Centro de Vacunacion es muy corto")
         }
-        if (centroVacunacion.tipo.trim() != "Privado" && centroVacunacion.tipo != "Publico") {
+        if (centroVacunacion.tipo.trim() != "Privado" && centroVacunacion.tipo != "Público") {
             throw BusinessException("Tipo de Centro de Vacunacion Invalido. Indique si es Privado o Publico.")
         }
         if (centroVacunacion.horario.trim().isEmpty()) {
